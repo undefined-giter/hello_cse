@@ -3,11 +3,28 @@
 namespace App\Http\Controllers;
 
 //use Illuminate\Http\Request;
-use app\Models\Profile;
+use App\Models\Profile;
 use app\Http\Requests\ProfileRequest;
 
 class ProfileController extends Controller
 {
+    public function index()
+    {
+        //TODO if user not admin :... else fetch all profiles
+        $activesProfiles = Profile::where('status', 'actif')
+                            ->orderBy('updated_at', 'desc')
+                            ->get(['id', 'first_name', 'last_name', 'image']);
+
+        return view('profiles.index', [
+            'profiles' => $activesProfiles
+        ]);
+    }
+
+    public function create()
+    {
+        return view('profiles.create');
+    }
+
     public function store(ProfileRequest $request)
     {
         $profile = Profile::create($request->validated());
