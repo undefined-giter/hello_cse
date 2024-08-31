@@ -9,14 +9,18 @@ Route::get('/', function () {
     return view('index');
 })->name('homepage');
 
-Route::get('/login', [AdminController::class, 'login'])->name('admin.login');
+Route::get('/login', [AdminController::class, 'login'])->name('login');
 
 Route::post('/login', [AdminController::class, 'verifyLogin']);
+
+Route::delete('/logout', [AdminController::class, 'logout'])->name('logout');
 
 
 Route::get('/profiles', [ProfileController::class, 'index'])->name('profiles.list');
 
-Route::get('/profiles/create', [ProfileController::class, 'create'])->name('profiles.create')->middleware('auth:sanctum');
+Route::get('/profiles/details/{id}', [ProfileController::class, 'details'])->name('profiles.details')->middleware('auth:admin');;
 
-Route::post('/profiles', [ProfileController::class, 'store'])->name('profiles.store')->middleware('auth:sanctum');
+Route::get('/profiles/create', [ProfileController::class, 'create'])->name('profiles.create')->middleware('auth:admin');;
+
+Route::post('/profiles', [ProfileController::class, 'store'])->name('profiles.store')->middleware('auth:admin');;
 // ->middleware('auth:sanctum') is here to protect routes by using Sanctum package;

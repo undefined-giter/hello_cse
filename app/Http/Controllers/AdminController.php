@@ -18,14 +18,23 @@ class AdminController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
-
-        if (Auth::attempt($credentials)) {
+        if (Auth::guard('admin')->attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('admin/dashboard');
+            return to_route('profiles.list');
         }
-    
-        return back()->withErrors([
-            'email' => 'Les identifiants fournis sont incorrects.',
-        ]);
+        
+
+        return back()->with('error', 'Les informations d\'identification fournies ne correspondent pas à nos administrateurs enregistrés');
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::guard('admin')->logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('homepage')->with('success', 'Vous êtes déconnecté.');
     }
 }
+

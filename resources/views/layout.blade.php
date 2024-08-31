@@ -17,13 +17,13 @@
             $route = request()->route()->getName();
         @endphp
 
-        <nav class="navbar navbar-expand-lg bg-orange-500 navbar-dark flex items-center justify-between">
+        <nav class="navbar navbar-expand-lg navbar-dark flex items-center justify-between" style="background:#0D3C4D">
             <div class="flex-1">
                 <a href="{{ route('homepage') }}"><img class="ml-2" src="{{ asset('storage/hello_cse.png') }}" alt="Logo HelloCSE" width="200px">
                 </a>
             </div>
 
-            <div class="flex-1 text-center">
+            <div class="flex-1">
                 <button class="btn btn-primary w-[180px] mx-auto {{ str_contains($route, 'profiles.list') ? 'active outline outline-2 outline-green-500' : '' }}" 
                     onclick="window.location='{{ route('profiles.list') }}'">
                     Liste des profiles
@@ -32,13 +32,22 @@
 
             <div class="flex-1 text-right">
                 @if(true) {{-- $adminUser --}}
-                    <button class="btn btn-primary mr-2 {{ str_contains($route, 'login') ? 'active outline outline-2 outline-green-500' : '' }}" 
-                        onclick="window.location='{{ route('admin.login') }}'">
-                        Connection<span class="text-xs text-gray-600" style="display: block; margin-top: -4px;">(Administrateurs seulement)</span>
+                    <button class="btn btn-primary mr-2 h-[38px] {{ str_contains($route, 'login') ? 'active outline outline-2 outline-green-500' : '' }}"
+                        onclick="window.location='{{ route('login') }}'" title='La connexion est réservée aux administrateurs seulement'>
+                        Connexion<span class="text-[10px] text-gray-600" style="display: block; margin-top: -6px;">Administrateurs seulement</span>
                     </button>
                 @endif
             </div>
         </nav>
+        <form method="POST" action="{{ route('logout') }}" class="inline">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-primary mr-2 h-[38px]">
+                Déconnexion
+                <span class="text-[10px] text-gray-600" style="display: block; margin-top: -6px;">Administrateurs seulement</span>
+            </button>
+        </form>
+        
 
         @if (session('success'))
             <div class="flash_message fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white text-center px-4 py-2 rounded shadow-lg z-50">

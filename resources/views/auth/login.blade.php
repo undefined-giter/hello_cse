@@ -6,8 +6,8 @@
 
 @section('content')
 
-    <div class="d-flex justify-content-center">
-        <form action="{{ route('admin.login') }}" method="POST">
+    <div class="d-flex justify-content-center m-4">
+        <form action="{{ route('login') }}" method="POST">
             @csrf
             <div class="form-group">
                 <label for="email">Email</label>
