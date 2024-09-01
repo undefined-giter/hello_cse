@@ -33,7 +33,7 @@
                     @endphp
 
                     <tr class="text-center bg-gray-200 {{ $bg_color }}">
-                        <td ><img src="{{ asset('storage/' . $profile->image) }}" alt="Image de profil" width='20px' height='20px' class="mx-auto" style="border-radius: 50%;"></td>
+                        <td class="elips"><img src="{{ asset('storage/' . $profile->image) }}" alt="Image de profil" width='28px' height='auto' class="mx-auto" style="border-radius: 50%;" loading="lazy"></td>
                         <td class="text-truncate elips">{{ $profile->first_name }}</td>
                         <td class="text-truncate elips">{{ $profile->last_name }}</td>
                         <td class="text-truncate elips">{{ $profile->updated_at->format('d/m/y') }}</td>
@@ -57,7 +57,6 @@
         <div class="mt-1">
             {{ $profiles->links() }}
         </div>
-
     </div>
 
 @endsection

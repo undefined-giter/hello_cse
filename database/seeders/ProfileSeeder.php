@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Profile;
+use Illuminate\Database\Seeder;
 
 class ProfileSeeder extends Seeder
 {
@@ -12,6 +12,28 @@ class ProfileSeeder extends Seeder
      */
     public function run(): void
     {
-        Profile::factory(50)->create();
+        $images = collect();
+
+        for ($i = 1; $i <= 38; $i++) {
+            $images->push("$i.jpg");
+        }
+
+        $images = $images->shuffle();
+
+        $profiles = Profile::all();
+
+        foreach ($profiles as $profile) {
+            if ($images->isNotEmpty() && rand(1, 6) === 1) {
+                $selectedImage = '0.png';
+            } elseif ($images->isNotEmpty()) {
+                $selectedImage = $images->pop();
+            } else {
+                $selectedImage = '0.png';
+            }
+
+            $profile->update([
+                'image' => 'profiles/' . $selectedImage,
+            ]);
+        }
     }
 }

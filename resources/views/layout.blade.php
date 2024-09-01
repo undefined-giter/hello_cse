@@ -49,13 +49,16 @@
         
         <hr class="w-full border-t-2 border-gray-300">
 
+        @php
+            $flashMessageClass = 'flash_message fixed top-12 left-1/2 transform -translate-x-1/2 text-white text-center px-4 py-2 rounded shadow-lg z-50';
+        @endphp
         @if (session('success'))
-            <div class="flash_message fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white text-center px-4 py-2 rounded shadow-lg z-50">
+            <div class="{{ $flashMessageClass }} bg-green-500">
                 {{ session('success') }}
             </div>
         @endif
         @if (session('error'))
-            <div class="flash_message fixed top-4 left-1/2 transform -translate-x-1/2 bg-red-500 text-white text-center px-4 py-2 rounded shadow-lg z-50">
+            <div class="{{ $flashMessageClass }} bg-red-500">
                 {{ session('error') }}
                 <ul>
                     @foreach($errors->all() as $error)
@@ -65,15 +68,13 @@
             </div>
         @endif
         @if (request()->has('error'))
-            <div class="flash_message fixed top-4 left-1/2 transform -translate-x-1/2 bg-red-500 text-white text-center px-4 py-2 rounded shadow-lg z-50">
+            <div class="{{ $flashMessageClass }} bg-red-500">
                 {{ request('error') }}
             </div>
         @endif
-
+    
         <main>
-            <h1 class="text-center text-lg mt-8">
-                @yield('title', $titleSuffix )
-            </h1>
+            <h1 class="text-center text-lg mt-8">@yield('title', $titleSuffix )</h1>
     
             @yield('content')
         </main>
