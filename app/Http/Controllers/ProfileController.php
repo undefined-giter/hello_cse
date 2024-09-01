@@ -7,6 +7,7 @@ use Illuminate\View\View;
 //use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use app\Http\Requests\ProfileRequest;
+use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
@@ -14,22 +15,28 @@ class ProfileController extends Controller
     {
         //TODO if user not admin :... else fetch all profiles
         // Only actives profiles are fetched
-        $profiles = Profile::where('status', 'actif')
-                            ->orderBy('updated_at', 'desc')
-                            ->paginate(20, ['id', 'first_name', 'last_name', 'image']); 
-                            // Timestamps are not displayed here by choice (!== requested), since I assumed it is an info to protect
+        if (!Auth::guard('admin')->check()) {
+            $profiles = Profile::where('status', 'actif')
+                                ->orderBy('updated_at', 'desc')
+                                ->paginate(20, ['id', 'first_name', 'last_name', 'image', 'updated_at']); 
+                                // Timestamps are not displayed here by choice (!== requested), since I assumed it is an info to protect
 
+            $status_displayed = 'actifs';
+        } else {
         // All profiles are fetched
-        // $profiles = Profile::orderBy('updated_at', 'desc')
-        //                     ->paginate(25, ['id', 'first_name', 'last_name', 'image', 'status']);
+            $profiles = Profile::orderBy('updated_at', 'desc')
+                ->paginate(25, ['id', 'first_name', 'last_name', 'image', 'updated_at', 'status']);
 
+            $status_displayed = 'complète';
+        }
 
         if (!$profiles) {
             return redirect()->route('homepage')->with('error', 'Pas de profile à montrer actuellement');
         }
 
         return view('profiles.index', [
-            'profiles' => $profiles
+            'profiles' => $profiles,
+            'status_displayed' => $status_displayed
         ]);
     }
 

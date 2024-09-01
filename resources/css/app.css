@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body{background-color :#0D3C4D}
+h1, label, p{color: gray}
+
+td{font-weight: 600;}
+
+.elips{
+    max-width: 160px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

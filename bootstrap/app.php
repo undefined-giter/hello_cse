@@ -3,6 +3,9 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -12,8 +15,15 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
-    })->create();
+        $exceptions->renderable(function (NotFoundHttpException $e, Request $request) {
+            return redirect()->route('homepage', ['error' => 'Cette page n\'existe pas']);
+        });
+
+        $exceptions->renderable(function (MethodNotAllowedHttpException $e, Request $request) {
+            return redirect()->route('homepage', ['error' => 'Cette action n\'est pas autorisée']);
+        });
+        
+    })
+    ->create();

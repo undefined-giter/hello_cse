@@ -20,7 +20,7 @@ class AdminController extends Controller
         ]);
         if (Auth::guard('admin')->attempt($credentials)) {
             $request->session()->regenerate();
-            return to_route('profiles.list');
+            return redirect()->intended(route('profiles.list'))->with('success', 'Vous êtes connecté');
         }
         
 
@@ -34,7 +34,7 @@ class AdminController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('homepage')->with('success', 'Vous êtes déconnecté.');
+        return redirect()->route('homepage')->with('success', 'Vous êtes déconnecté');
     }
 }
 

@@ -35,19 +35,19 @@ return [
     |
     */
 
- 'guards' => [
-    'admin' => [
-        'driver' => 'session',
-        'provider' => 'admins',
+    'guards' => [
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
     ],
-],
 
-'providers' => [
-    'admins' => [
-        'driver' => 'eloquent',
-        'model' => App\Models\Admin::class,
+    'providers' => [
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
+        ],
     ],
-],
 
 
     /*
@@ -107,5 +107,4 @@ return [
     */
 
     'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
-
 ];
