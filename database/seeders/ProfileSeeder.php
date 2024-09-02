@@ -23,12 +23,12 @@ class ProfileSeeder extends Seeder
         $profiles = Profile::all();
 
         foreach ($profiles as $profile) {
-            if ($images->isNotEmpty() && rand(1, 6) === 1) {
-                $selectedImage = '0.png';
+            if (rand(1, 6) == 1) {
+                $selectedImage = 'default_user_img.png';
             } elseif ($images->isNotEmpty()) {
                 $selectedImage = $images->pop();
             } else {
-                $selectedImage = '0.png';
+                $selectedImage = 'default_user_img.png';
             }
 
             $profile->update([

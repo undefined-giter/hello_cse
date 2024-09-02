@@ -16,12 +16,13 @@ class ProfileFactory extends Factory
      */
     public function definition(): array
     {
-        $this->faker->locale = 'fr_FR'; // Not sure about the result of the french data asked
+        $this->faker->locale = 'fr_FR';
 
         return [
             'first_name' => $this->faker->firstName(),
             'last_name' => $this->faker->lastName(),
-            'image' => 'profiles/default_user_img.png',
+            'image' => null,
+            // this have to be null if we want to shuffle base img profils and personnal img profils while using seeder (rand(1, 6)) considering we display profiles by last update
             'status' => $this->faker->randomElement(['inactif', 'en attente', 'actif']),
         ];
     }
