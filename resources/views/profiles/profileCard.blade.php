@@ -37,6 +37,11 @@
             </div>
         </div>
         <div class="flex">
+            <form action="{{ route('profiles.delete', ['id' => $profile->id]) }}" method="POST" class="inline">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger mr-auto ml-14">Supprimer</button>
+            </form>            
             <button class="btn btn-primary ml-auto mr-14" onclick="window.location='{{ route('profiles.edit', ['id' => $profile->id]) }}'">Modifier</button>
         </div>
     </div>

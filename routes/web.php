@@ -18,6 +18,7 @@ Route::delete('/logout', [AdminController::class, 'logout'])->name('logout')->mi
 Route::get('/profiles', [ProfileController::class, 'index'])->name('profiles.list');
 
 Route::middleware('auth:admin')->name('profiles.')->group(function () {
+    
     Route::get('/profiles/details/{id}', [ProfileController::class, 'details'])->name('details');
 
     Route::get('/profiles/create', [ProfileController::class, 'create'])->name('create');
@@ -25,4 +26,6 @@ Route::middleware('auth:admin')->name('profiles.')->group(function () {
 
     Route::get('/profiles/{id}/edit', [ProfileController::class, 'edit'])->name('edit');
     Route::put('/profiles/{id}', [ProfileController::class, 'update'])->name('update');
+
+    Route::delete('/profiles/{id}/delete', [ProfileController::class, 'destroy'])->name('delete');
 });

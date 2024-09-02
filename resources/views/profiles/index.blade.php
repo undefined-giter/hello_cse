@@ -8,6 +8,18 @@
 
     <div class="flex flex-col items-center mt-8 max-w-3xl mx-auto">
 
+        @if(Auth::guard('admin')->check())
+            <div class="m-2">
+                <p>Choix du statut :</p>
+                <form method="GET" action="{{ route('profiles.list') }}">
+                    <button type="submit" name="status" value="tous" class="btn px-2 py-1 text-sm {{ request('status') == 'tous' || !request('status') ? 'btn-primary' : 'btn-secondary' }}">Tous</button>
+                    <button type="submit" name="status" value="actif" class="btn px-2 py-1 text-sm {{ request('status') == 'actif' ? 'btn-primary' : 'btn-secondary' }}">Actif</button>
+                    <button type="submit" name="status" value="en attente" class="btn px-2 py-1 text-sm {{ request('status') == 'en attente' ? 'btn-primary' : 'btn-secondary' }}">En attente</button>
+                    <button type="submit" name="status" value="inactif" class="btn px-2 py-1 text-sm {{ request('status') == 'inactif' ? 'btn-primary' : 'btn-secondary' }}">Inactif</button>
+                </form>
+            </div>
+        @endif      
+
         <table class="bg-grey border w-3/4">
             <thead class="bg-gray-400">
                 <tr class="text-center">

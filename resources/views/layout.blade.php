@@ -25,8 +25,14 @@
             <div class="flex flex-1 justify-center">
                 <button class="btn btn-primary w-[180px] {{ str_contains($route, 'profiles.list') ? 'active outline outline-2 outline-green-500' : '' }}" 
                     onclick="window.location='{{ route('profiles.list') }}'">
-                    Liste des profils
+                    Liste des Profils
                 </button>
+                @if(Auth::guard('admin')->check())
+                    <button class="btn btn-primary w-[180px] ml-2 {{ str_contains($route, 'profiles.create') ? 'active outline outline-2 outline-green-500' : '' }}" 
+                        onclick="window.location='{{ route('profiles.create') }}'">
+                        Créer un Profil
+                    </button>
+                @endif
             </div>
 
             <div class="flex">

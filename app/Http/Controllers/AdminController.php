@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
 
 class AdminController extends Controller
 {
-    public function login()
+    public function login(): View
     {
         return view('auth.login');
     }
 
-    public function verifyLogin(Request $request)
+    public function verifyLogin(Request $request): RedirectResponse
     {
         $credentials = $request->validate([
             'email' => ['required', 'email'],
@@ -27,7 +29,7 @@ class AdminController extends Controller
         return back()->with('error', 'Les informations d\'identification fournies ne correspondent pas à nos administrateurs enregistrés');
     }
 
-    public function logout(Request $request)
+    public function logout(Request $request): RedirectResponse
     {
         Auth::guard('admin')->logout();
 
